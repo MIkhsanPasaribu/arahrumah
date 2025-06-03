@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 
 const WhyChooseUsSection = () => {
   const features = [
@@ -29,9 +28,9 @@ const WhyChooseUsSection = () => {
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Why Choose ArahRumah
-          </h2>
+          </h2>{" "}
           <p className="text-dark-gray text-lg max-w-2xl mx-auto">
-            We're committed to helping you find your dream property with
+            We&apos;re committed to helping you find your dream property with
             confidence and ease
           </p>
         </div>

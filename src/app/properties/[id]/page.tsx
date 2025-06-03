@@ -30,8 +30,10 @@ export default function PropertyDetailPage({
 
         const data = await response.json();
         setProperty(data);
-      } catch (err: any) {
-        setError(err.message || "An error occurred");
+      } catch (err: unknown) {
+        const errorMessage =
+          err instanceof Error ? err.message : "An error occurred";
+        setError(errorMessage);
       } finally {
         setLoading(false);
       }
@@ -468,7 +470,9 @@ export default function PropertyDetailPage({
               <li className="flex justify-between">
                 <span className="text-dark-gray">Property ID:</span>
                 <span className="font-medium text-black">
-                  {property._id?.substring(0, 8).toUpperCase()}
+                  {typeof property._id === "string"
+                    ? property._id.substring(0, 8).toUpperCase()
+                    : ""}
                 </span>
               </li>
               <li className="flex justify-between">

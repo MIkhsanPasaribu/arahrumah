@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import PropertyCard from "./PropertyCard";
 import { IProperty } from "@/models/Property";
 
@@ -20,45 +20,52 @@ const PropertyListing = ({
   const [totalPages, setTotalPages] = useState<number>(1);
 
   // Function to fetch properties with filters
-  const fetchProperties = async (page = 1, filters = {}) => {
-    try {
-      setLoading(true);
-      setError(null);
+  const fetchProperties = useCallback(
+    async (currentPage = 1, currentFilters = {}) => {
+      try {
+        setLoading(true);
+        setError(null);
 
-      // Build query params
-      const params = new URLSearchParams();
-      params.append("page", page.toString());
+        // Build query params
+        const params = new URLSearchParams();
+        params.append("page", currentPage.toString());
 
-      // Add filters to params
-      Object.entries(filters).forEach(([key, value]) => {
-        if (value) {
-          params.append(key, String(value));
+        // Add filters to params
+        Object.entries(currentFilters).forEach(([key, value]) => {
+          if (value) {
+            params.append(key, String(value));
+          }
+        });
+
+        // Fetch from API
+        const response = await fetch(`/api/properties?${params.toString()}`);
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch properties");
         }
-      });
 
-      // Fetch from API
-      const response = await fetch(`/api/properties?${params.toString()}`);
+        const data = await response.json();
 
-      if (!response.ok) {
-        throw new Error("Failed to fetch properties");
+        setProperties(data.properties || []);
+        setTotalPages(data.pagination?.totalPages || 1);
+      } catch (err: unknown) {
+        const errorMessage =
+          err instanceof Error ? err.message : "An error occurred";
+        setError(errorMessage);
+        setProperties([]);
+      } finally {
+        setLoading(false);
       }
+    },
+    [setLoading, setError, setProperties, setTotalPages]
+  ); // Add dependencies that this function uses
 
-      const data = await response.json();
+  // Memoize the filters string to avoid unnecessary re-renders
+  const filtersString = JSON.stringify(filters);
 
-      setProperties(data.properties || []);
-      setTotalPages(data.pagination?.totalPages || 1);
-    } catch (err: any) {
-      setError(err.message || "An error occurred");
-      setProperties([]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Fetch properties whenever filters or page changes
   useEffect(() => {
     fetchProperties(page, filters);
-  }, [page, JSON.stringify(filters)]);
+  }, [page, filtersString, fetchProperties]);
 
   // For demo purposes, if no API is connected yet, use dummy data
   useEffect(() => {
