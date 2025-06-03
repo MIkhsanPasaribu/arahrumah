@@ -3,10 +3,5 @@
     "env": {
       "NEXT_LINT_REPRODUCE_WARNINGS": "false"
     }
-  },
-  "functions": {
-    "src/app/api/**/*.ts": {
-      "runtime": "nodejs18.x"
-    }
   }
 }
