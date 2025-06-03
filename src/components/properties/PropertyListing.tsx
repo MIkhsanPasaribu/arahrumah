@@ -18,13 +18,13 @@ const PropertyListing = ({
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
-
   // Function to fetch properties with filters
   const fetchProperties = useCallback(
     async (currentPage = 1, currentFilters = {}) => {
       try {
         setLoading(true);
         setError(null);
+        console.log("Fetching properties...", currentFilters);
 
         // Build query params
         const params = new URLSearchParams();
@@ -37,20 +37,28 @@ const PropertyListing = ({
           }
         });
 
+        console.log("API URL:", `/api/properties?${params.toString()}`);
+
         // Fetch from API
         const response = await fetch(`/api/properties?${params.toString()}`);
 
+        console.log("API Response status:", response.status);
+
         if (!response.ok) {
-          throw new Error("Failed to fetch properties");
+          const errorData = await response.json();
+          console.error("API Error:", errorData);
+          throw new Error(errorData.message || "Failed to fetch properties");
         }
 
         const data = await response.json();
+        console.log("API Response data:", data);
 
         setProperties(data.properties || []);
         setTotalPages(data.pagination?.totalPages || 1);
       } catch (err: unknown) {
         const errorMessage =
           err instanceof Error ? err.message : "An error occurred";
+        console.error("Fetch error:", err);
         setError(errorMessage);
         setProperties([]);
       } finally {
@@ -59,13 +67,12 @@ const PropertyListing = ({
     },
     [setLoading, setError, setProperties, setTotalPages]
   ); // Add dependencies that this function uses
-
   // Memoize the filters string to avoid unnecessary re-renders
   const filtersString = JSON.stringify(filters);
 
   useEffect(() => {
     fetchProperties(page, filters);
-  }, [page, filtersString, fetchProperties]);
+  }, [page, filtersString, fetchProperties, filters]);
 
   // For demo purposes, if no API is connected yet, use dummy data
   useEffect(() => {
@@ -90,7 +97,7 @@ const PropertyListing = ({
             buildingSize: 250,
             landSize: 350,
           },
-          images: ["/images/property-placeholder.jpg"],
+          images: ["/images/property1.svg"],
           featured: true,
         },
         {
@@ -110,7 +117,7 @@ const PropertyListing = ({
             bathrooms: 2,
             buildingSize: 85,
           },
-          images: ["/images/property-placeholder.jpg"],
+          images: ["/images/property2.svg"],
           featured: false,
         },
         {
@@ -125,10 +132,8 @@ const PropertyListing = ({
             city: "Tangerang",
             zipCode: "15310",
           },
-          features: {
-            landSize: 500,
-          },
-          images: ["/images/property-placeholder.jpg"],
+          features: { landSize: 500 },
+          images: ["/images/property3.svg"],
           featured: true,
         },
       ];

@@ -23,7 +23,7 @@ const mockProperties = [
     status: "for-sale",
     price: 850000,
     location: "Bali, Indonesia",
-    imageUrl: "/images/property1.jpg",
+    imageUrl: "/images/property1.svg",
     createdAt: "2025-05-15",
   },
   {
@@ -32,7 +32,7 @@ const mockProperties = [
     status: "for-rent",
     price: 2500,
     location: "Jakarta, Indonesia",
-    imageUrl: "/images/property2.jpg",
+    imageUrl: "/images/property2.svg",
     createdAt: "2025-05-10",
   },
 ];

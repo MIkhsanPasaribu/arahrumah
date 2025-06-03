@@ -11,7 +11,7 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
   const imageUrl =
     property.images && property.images.length > 0
       ? property.images[0]
-      : "/images/property-placeholder.jpg";
+      : "/images/property1.svg";
 
   return (
     <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300">

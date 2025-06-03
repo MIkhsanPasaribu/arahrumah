@@ -82,9 +82,9 @@ export default function PropertyDetailPage({ params }: PageProps) {
           furnished: false,
         },
         images: [
-          "/images/property-placeholder.jpg",
-          "/images/property-placeholder.jpg",
-          "/images/property-placeholder.jpg",
+          "/images/property1.svg",
+          "/images/property2.svg",
+          "/images/property3.svg",
         ],
         featured: true,
       };
