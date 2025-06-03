@@ -1,8 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { NextResponse } from "next/server";
 import dbConnect from "@/lib/dbConnect";
 import Property from "@/models/Property";
-import { getServerSession } from "next-auth/next";
 
 // Helper function to verify JWT token from cookies
 async function getSessionUser(request: Request) {

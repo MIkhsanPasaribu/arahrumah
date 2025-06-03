@@ -5,24 +5,33 @@ import Image from "next/image";
 import Link from "next/link";
 import { IProperty } from "@/models/Property";
 
-export default function PropertyDetailPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+interface PageProps {
+  params: Promise<{ id: string }>;
+}
+
+export default function PropertyDetailPage({ params }: PageProps) {
   const [property, setProperty] = useState<Partial<IProperty> | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [activeImage, setActiveImage] = useState<number>(0);
+  const [resolvedParams, setResolvedParams] = useState<{ id: string } | null>(
+    null
+  );
 
   useEffect(() => {
-    const fetchProperty = async () => {
+    const resolveParamsAndFetch = async () => {
       try {
         setLoading(true);
         setError(null);
 
+        // Resolve the params Promise first
+        const resolvedParamsData = await params;
+        setResolvedParams(resolvedParamsData);
+
         // Fetch property from API
-        const response = await fetch(`/api/properties/${params.id}`);
+        const response = await fetch(
+          `/api/properties/${resolvedParamsData.id}`
+        );
 
         if (!response.ok) {
           throw new Error("Failed to fetch property details");
@@ -39,15 +48,14 @@ export default function PropertyDetailPage({
       }
     };
 
-    fetchProperty();
-  }, [params.id]);
-
+    resolveParamsAndFetch();
+  }, [params]);
   // For demo purposes, if API isn't connected
   useEffect(() => {
-    if (!property && !loading && !error) {
+    if (!property && !loading && !error && resolvedParams) {
       // Sample property
       const sampleProperty: Partial<IProperty> = {
-        _id: params.id,
+        _id: resolvedParams.id,
         title: "Modern Family House",
         description:
           "This beautiful modern house features a spacious living area, a large kitchen with modern appliances, and a beautiful garden perfect for family gatherings. The master bedroom has an en-suite bathroom and walk-in closet. Located in a quiet neighborhood close to schools, parks, and shopping centers.",
@@ -80,10 +88,9 @@ export default function PropertyDetailPage({
         ],
         featured: true,
       };
-
       setProperty(sampleProperty);
     }
-  }, [property, loading, error, params.id]);
+  }, [property, loading, error, resolvedParams]);
 
   if (loading) {
     return (

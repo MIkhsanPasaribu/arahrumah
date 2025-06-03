@@ -1,7 +1,12 @@
 {
   "build": {
     "env": {
-      "NEXT_LINT_REPRODUCT_WARNINGS": "false"
+      "NEXT_LINT_REPRODUCE_WARNINGS": "false"
+    }
+  },
+  "functions": {
+    "src/app/api/**/*.ts": {
+      "runtime": "nodejs18.x"
     }
   }
 }

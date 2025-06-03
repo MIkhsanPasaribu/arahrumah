@@ -2,15 +2,16 @@ import { NextResponse } from "next/server";
 import dbConnect from "@/lib/dbConnect";
 import Property from "@/models/Property";
 
-export async function GET(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
+interface RouteParams {
+  params: Promise<{ id: string }>;
+}
+
+export async function GET(request: Request, { params }: RouteParams) {
   try {
     // Connect to database
     await dbConnect();
 
-    const id = params.id;
+    const { id } = await params;
 
     // Fetch property by ID
     const property = await Property.findById(id).populate(
