@@ -1,36 +1,117 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ArahRumah - Indonesian Real Estate Marketplace
+
+ArahRumah is a MERN stack (MongoDB, Express.js, React, Next.js) web application that provides a platform for property listings in Indonesia.
+
+## Features
+
+- User authentication (login/register)
+- Property listings with search and filters
+- Property details with images and features
+- User dashboard for managing properties
+- Contact form for inquiries
+- Responsive design
+
+## Tech Stack
+
+- **Frontend**: Next.js, React, TypeScript, Tailwind CSS
+- **Backend**: Express.js, Node.js
+- **Database**: MongoDB
+- **Authentication**: JWT (JSON Web Tokens)
+- **UI Libraries**: Heroicons, React Icons, Swiper, React Hook Form
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Node.js (v16 or higher)
+- npm or yarn
+- MongoDB Atlas account (or local MongoDB)
+
+### Environment Variables
+
+Create a `.env.local` file in the root directory with the following variables:
+
+```
+MONGODB_URI=mongodb+srv://admin:arahrumah@arahrumah.vumoefv.mongodb.net/?retryWrites=true&w=majority&appName=arahrumah
+JWT_SECRET=your_jwt_secret_key_should_be_very_long_and_secure
+NEXT_PUBLIC_API_URL=http://localhost:3000
+PASSWORD_ADMIN=arahrumah
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Installation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Clone the repository
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+   ```bash
+   git clone https://github.com/your-username/arahrumah.git
+   cd arahrumah
+   ```
 
-## Learn More
+2. Install dependencies
 
-To learn more about Next.js, take a look at the following resources:
+   ```bash
+   npm install
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. Create admin user (optional)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   ```bash
+   npm run create-admin
+   ```
 
-## Deploy on Vercel
+4. Run the development server
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```bash
+   npm run dev
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+5. Open your browser and navigate to `http://localhost:3000`
+
+## Project Structure
+
+- `/src/app` - Next.js app router routes and pages
+- `/src/components` - React components
+- `/src/lib` - Utility functions and database connection
+- `/src/models` - MongoDB schemas
+- `/public` - Static assets
+
+## Color Palette
+
+- **Black (#000000)** - Header/Footer
+- **White (#FFFFFF)** - Primary background
+- **Light Gray (#E5E5E5)** - Dividers
+- **Emerald Green (#10B981)** - CTA buttons
+- **Dark Gray (#6B7280)** - Body text
+
+## User Types
+
+- **Regular Users** - Can browse properties, save favorites, and contact property owners
+- **Property Owners** - Can list properties for sale or rent
+- **Admins** - Have full access to manage all users and properties
+
+## API Routes
+
+- `/api/auth/login` - User login
+- `/api/auth/register` - User registration
+- `/api/properties` - List all properties
+- `/api/properties/[id]` - Get a specific property
+- `/api/properties/create` - Create a new property
+
+## Admin Access
+
+To access the admin panel:
+
+1. Run `npm run create-admin` to create an admin user
+2. Login with email: admin@arahrumah.com and password from PASSWORD_ADMIN env variable
+
+## Development Notes
+
+- The application uses Next.js App Router for routing
+- Tailwind CSS is used for styling
+- MongoDB is used for data storage with Mongoose as the ODM
+- JWT is used for authentication
+- Images are currently placeholder SVGs for the MVP
+
+## License
+
+This project is licensed under the MIT License.

@@ -1,0 +1,74 @@
+# ArahRumah - Real Estate Website
+
+ArahRumah is a modern real estate marketplace built with the MERN stack (MongoDB, Express.js, React.js, Node.js) and Next.js. The platform allows users to browse, search, and filter property listings across Indonesia.
+
+## Features
+
+- User authentication (sign up, login)
+- Property search and filtering
+- Detailed property listings
+- User dashboard
+- Property management for agents
+- Responsive design for all devices
+
+## Color Palette
+
+- Black (#000000) - Header/Footer
+- White (#FFFFFF) - Primary background
+- Light Gray (#E5E5E5) - Dividers
+- Emerald Green (#10B981) - CTA buttons
+- Dark Gray (#6B7280) - Body text
+
+## Tech Stack
+
+- **Frontend**: Next.js, React, TypeScript, Tailwind CSS
+- **Backend**: Node.js, Express.js
+- **Database**: MongoDB
+- **Authentication**: JWT, bcrypt
+- **Image Storage**: Local storage (expandable to cloud storage)
+
+## Getting Started
+
+First, install dependencies:
+
+```bash
+npm install
+```
+
+Create a `.env.local` file in the root directory with the following variables:
+
+```
+MONGODB_URI=mongodb://localhost:27017/arahrumah
+JWT_SECRET=your_jwt_secret_key
+NEXT_PUBLIC_API_URL=http://localhost:3000
+```
+
+Then, run the development server:
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the website.
+
+## Project Structure
+
+- `/src/app` - Next.js application routes
+- `/src/components` - Reusable React components
+- `/src/models` - MongoDB models
+- `/src/lib` - Utility functions and database connections
+
+## Future Enhancements
+
+- Chat system between buyers and sellers
+- Advanced property filtering
+- Integration with maps for property locations
+- Payment gateways for premium listings
+- Administrative dashboard
+
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
